@@ -100,6 +100,7 @@ The application supports several types of log files:
 - **Frontend**: React, TypeScript, Tailwind CSS, Recharts
 - **Backend**: Express.js, Node.js
 - **API**: RESTful API with file upload capabilities
+- **Storage**: File-based JSON storage for report data
 - **Data Processing**: Custom parsers for different log formats
 - **State Management**: React Hooks and Context
 - **Styling**: Tailwind CSS with custom components
@@ -117,7 +118,7 @@ The application supports several types of log files:
 - `/server`: Backend Express application
   - `index.ts`: Server entry point
   - `routes.ts`: API route definitions
-  - `storage.ts`: File storage utilities
+  - `file-storage.ts`: File-based storage implementation
 - `/shared`: Shared code between client and server
 
 ### Available Scripts
@@ -126,7 +127,7 @@ The application supports several types of log files:
 - `npm run build`: Build for production
 - `npm run start`: Start production server
 - `npm run check`: Run TypeScript type checking
-- `npm run db:push`: Update database schema (if using Drizzle ORM)
+- `npm run test:filestorage`: Test file-based storage functionality
 
 ## License
 
