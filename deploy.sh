@@ -1,43 +1,32 @@
 #!/bin/bash
 
-# Server Performance Analysis App Deployment Script
-# This script builds and packages the application using pkg
+# Create deployment package
+echo "Creating deployment package..."
+tar -czf server-performance-app-docker.tar.gz \
+    Dockerfile \
+    docker-compose.yml \
+    .dockerignore \
+    package*.json \
+    tsconfig.json \
+    vite.config.ts \
+    client/ \
+    server/ \
+    shared/ \
+    crypto-polyfill.js \
+    crypto-polyfill-dev.cjs
 
-echo "🚀 Starting deployment process..."
-
-# Build the application
-echo "🏗️ Building application..."
-npm run build
-
-if [ $? -ne 0 ]; then
-  echo "❌ Build failed"
-  exit 1
-fi
-echo "✅ Application built successfully"
-
-# Ensure output directory exists
-OUTPUT_DIR="./dist-pkg"
-mkdir -p $OUTPUT_DIR
-echo "✅ Ensured output directory $OUTPUT_DIR exists"
-
-# Package the application using pkg
-echo "📦 Packaging application..."
-npx pkg pkg-config.json --output $OUTPUT_DIR/server-performance-app
-
-if [ $? -ne 0 ]; then
-  echo "❌ Packaging failed"
-  exit 1
-fi
-
-echo "✅ Application packaged successfully"
-echo "📁 Binary created at: $OUTPUT_DIR/server-performance-app"
-
-echo "✨ Deployment completed successfully!"
+echo "Deployment package created: server-performance-app-docker.tar.gz"
 echo ""
-echo "You can deploy the binary (server-performance-app) from the $OUTPUT_DIR directory to your Ubuntu server."
+echo "=== Deployment Instructions ==="
+echo "1. Transfer server-performance-app-docker.tar.gz to your target server"
+echo "2. On the target server:"
+echo "   a. Extract the package:"
+echo "      tar -xzf server-performance-app-docker.tar.gz"
+echo "   b. Install Docker if not already installed:"
+echo "      curl -fsSL https://get.docker.com -o get-docker.sh"
+echo "      sudo sh get-docker.sh"
+echo "   c. Build and run the container:"
+echo "      sudo docker build -t performance-analysis-app ."
+echo "      sudo docker run -d -p 3000:3000 performance-analysis-app"
 echo ""
-echo "Deployment instructions:"
-echo "1. Transfer the binary to your server: scp ./dist-pkg/server-performance-app user@your-server:/path/to/deploy/"
-echo "2. SSH into your server: ssh user@your-server"
-echo "3. Make the binary executable: chmod +x /path/to/deploy/server-performance-app"
-echo "4. Run the application: /path/to/deploy/server-performance-app"
+echo "The application will be available at http://[server-ip]:3000"

@@ -50,6 +50,11 @@ app.use((req, res, next) => {
   const server = await registerRoutes(app);
   console.log('Routes registered successfully');
 
+  // Health check endpoint for Docker
+  app.get('/health', (_req: Request, res: Response) => {
+    res.status(200).json({ status: 'healthy', timestamp: new Date().toISOString() });
+  });
+
   app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {
     const status = err.status || err.statusCode || 500;
     const message = err.message || "Internal Server Error";
@@ -85,8 +90,8 @@ app.use((req, res, next) => {
     console.log(`Port ${port} is available`);
     server.listen({
       port,
-      host: "localhost"
-      // reusePort option removed to avoid potential compatibility issues
+      host: "0.0.0.0"
+      // Listen on all network interfaces for Docker compatibility
     }, () => {
       log(`serving on port ${port}`);
     });
@@ -96,7 +101,7 @@ app.use((req, res, next) => {
     const fallbackPort = 9876;
     server.listen({
       port: fallbackPort,
-      host: "localhost"
+      host: "0.0.0.0"
     }, () => {
       log(`serving on fallback port ${fallbackPort}`);
     });

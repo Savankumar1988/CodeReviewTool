@@ -1,0 +1,53 @@
+# Version control
+.git
+.gitignore
+
+# Dependencies
+node_modules
+npm-debug.log
+yarn-debug.log
+yarn-error.log
+
+# Development
+.env
+.env.local
+.env.*.local
+*.log
+
+# Build output
+dist-legacy
+legacy-deployment
+
+# Editor directories
+.idea
+.vscode
+*.swp
+*.swo
+
+# Test files
+__tests__
+*.test.*
+*.spec.*
+
+# Documentation
+*.md
+docs/
+
+# Temporary files
+.tmp
+.temp
+.cache
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Docker files
+Dockerfile*
+docker-compose*
+.docker
