@@ -1,19 +1,8 @@
 #!/usr/bin/env node
 
-// Set up the crypto polyfill
-if (!globalThis.crypto) {
-  globalThis.crypto = {};
-}
-if (!globalThis.crypto.getRandomValues) {
-  const crypto = require('crypto');
-  globalThis.crypto.getRandomValues = function(array) {
-    return crypto.randomFillSync(array);
-  };
-}
-
-// Run the Vite build command
+// Run our patched Vite build command
 const { spawn } = require('child_process');
-const vite = spawn('./node_modules/.bin/vite', ['build'], { 
+const vite = spawn('node', ['vite-crypto-patch.cjs', 'build'], { 
   stdio: 'inherit',
   shell: true 
 });
